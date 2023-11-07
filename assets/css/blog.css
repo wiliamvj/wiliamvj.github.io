@@ -31,10 +31,10 @@ body {
   background-color: var(--gray-5);
 }
 header {
-  padding: 2rem 0 4rem 0;
+  padding: 2rem 0 2rem 0;
 }
 header .site-title {
-  font-size: 4rem;
+  font-size: 3.5rem;
   font-weight: bolder;
   line-height: 110%;
   color: var(--white-1);
@@ -64,8 +64,14 @@ main {
   font-weight: 300;
 }
 #text-wrapper a {
-  color: cyan;
-  border-bottom: 1px solid cyan;
+  color: #5353cc;
+}
+.me-dot {
+  color: #5353cc;
+}
+#text-wrapper a:hover {
+  color: #5353cc;
+  border-bottom: 1px solid #5353cc;
 }
 #social-wrapper {
   margin-top: 1rem;
@@ -85,13 +91,13 @@ main {
 
 .articles {
   display: grid;
-  row-gap: 2rem;
-  margin: 4rem 0 3rem 0;
+  row-gap: 1rem;
+  margin: 2rem 0 3rem 0;
 }
 .articles .article {
   padding: 2rem;
   background: var(--gray-3);
-  border-radius: 15px;
+  border-radius: 2px;
   transition: all 0.2s ease-in-out;
 }
 .articles .article .article-title,
@@ -120,7 +126,7 @@ main {
   display: block;
   color: var(--gray-4);
   background: var(--white-2);
-  border-radius: 15px;
+  border-radius: 2px;
   font-size: 0.7rem;
   padding: 0 0.8rem;
   line-height: 1.3rem;
