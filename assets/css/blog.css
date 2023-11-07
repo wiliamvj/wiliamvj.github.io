@@ -9,6 +9,7 @@
   --gray-6: #111111;
   --white-1: #eeeeee;
   --white-2: #a9abb3;
+  --primary-purple: #5353cc;
 }
 * {
   font-family: inherit;
@@ -64,14 +65,17 @@ main {
   font-weight: 300;
 }
 #text-wrapper a {
-  color: #5353cc;
+  color: var(--primary-purple);
 }
 .me-dot {
-  color: #5353cc;
+  color: var(--primary-purple);
 }
 #text-wrapper a:hover {
-  color: #5353cc;
-  border-bottom: 1px solid #5353cc;
+  color: var(--primary-purple);
+  border-bottom: 1px solid var(--primary-purple);
+}
+.article .article-title a:hover {
+  border-bottom: 1px solid var(--primary-purple);
 }
 #social-wrapper {
   margin-top: 1rem;
@@ -131,6 +135,10 @@ main {
   padding: 0 0.8rem;
   line-height: 1.3rem;
   cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+.articles .article .categories .category:hover {
+  background: var(--white-1);
 }
 /* media query */
 

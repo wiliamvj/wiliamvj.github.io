@@ -7,6 +7,7 @@
   --gray-6: #111111;
   --white-1: #eeeeee;
   --white-2: #a9abb3;
+  --primary-purple: #5353cc;
 }
 #category-modal-bg {
   position: fixed;
@@ -28,7 +29,7 @@
   z-index: 100;
   max-width: 850px;
   max-height: 60vh;
-  border-radius: 1rem;
+  border-radius: 2px;
   padding: 1rem;
   margin: auto;
   background: var(--gray-3);
@@ -42,6 +43,7 @@
   overflow: auto;
 }
 #category-modal-title {
+  color: var(--primary-purple);
   margin-bottom: 1rem;
   font-size: 2rem;
   padding: 1rem;

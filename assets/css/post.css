@@ -9,6 +9,7 @@
   --gray-6: #111111;
   --white-1: #eeeeee;
   --white-2: #a9abb3;
+  --primary-purple: #5353cc;
 }
 * {
   font-family: inherit;
@@ -31,8 +32,10 @@ body {
   background-color: var(--gray-5);
 }
 .content a {
-  color: cyan;
-  border-bottom: 1px solid cyan;
+  color: var(--primary-purple);
+}
+.content a:hover {
+  border-bottom: 1px solid var(--primary-purple);
 }
 header {
   padding: 2rem 0 4rem 0;
@@ -76,11 +79,14 @@ main {
   display: block;
   color: var(--gray-4);
   background: var(--white-2);
-  border-radius: 15px;
+  border-radius: 2px;
   font-size: 0.7rem;
   padding: 0 0.8rem;
   line-height: 1.3rem;
   cursor: pointer;
+}
+.categories .category:hover {
+  background: var(--white-1);
 }
 
 /* markdown content */
@@ -161,7 +167,7 @@ main {
   margin: 1rem 0;
 }
 .content img.emoji {
-	margin: 0 !important;
+  margin: 0 !important;
 }
 
 /* pre , code */
