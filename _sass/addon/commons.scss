@@ -484,7 +484,7 @@ main {
   display: inline-block;
   min-width: 2rem;
   text-align: center;
-  border-radius: 0.5rem;
+  border-radius: $base-radius;
   border: 1px solid var(--btn-border-color);
   padding: 0 0.4rem;
   color: var(--text-muted-color);
@@ -864,11 +864,6 @@ $btn-mb: 0.5rem;
       @include ml-mr(calc(($sb-btn-gap - $btn-border-width) / 2));
 
       background-color: var(--sidebar-btn-color);
-      content: "";
-      width: $btn-border-width;
-      height: $btn-border-width;
-      border-radius: $base-radius;
-      margin-bottom: $btn-mb;
     }
   } /* .sidebar-bottom */
 } /* #sidebar */
