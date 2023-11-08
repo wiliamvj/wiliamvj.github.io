@@ -18,9 +18,9 @@
       background: #999999;
       width: 5px;
       height: 5px;
-      border-radius: 50%;
+      border-radius: $base-radius;
       display: block;
-      content: '';
+      content: "";
       position: relative;
       top: 0.6rem;
       margin-right: 0.5rem;
