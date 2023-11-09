@@ -1033,6 +1033,10 @@ search {
   }
 }
 
+#notification .toast-body button {
+  border-radius: $basic-radius !important;
+}
+
 #search-results {
   padding-bottom: 3rem;
 
@@ -1190,7 +1194,7 @@ search {
     &.show {
       display: block;
       min-width: 20rem;
-      border-radius: 0.5rem;
+      border-radius: $base-radius;
       -webkit-backdrop-filter: blur(10px);
       backdrop-filter: blur(10px);
       background-color: rgba(255, 255, 255, 0.5);
