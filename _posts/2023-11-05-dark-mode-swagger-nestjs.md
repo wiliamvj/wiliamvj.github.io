@@ -2,7 +2,7 @@
 title: Como deixar o Swagger com tema dark mode usando NestJS
 author: wiliamvj
 date: 2023-11-05 13:53:00 +0800
-categories: [NestJS, NodeJS]
+categories: [NestJS]
 tags: [NestJS, Docs, Swagger]
 pin: false
 math: false

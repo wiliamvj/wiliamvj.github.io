@@ -2,7 +2,7 @@
 title: Usando contratos com NestJS, facilitando seus testes unitários
 author: wiliamvj
 date: 2023-10-12 08:33:00 +0800
-categories: [NestJS, NodeJS]
+categories: [NestJS]
 tags: [NestJS, NodeJS, Testing, Jest]
 pin: false
 math: false
