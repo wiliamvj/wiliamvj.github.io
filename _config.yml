@@ -14,9 +14,9 @@ timezone: America/Sao_Paulo
 # jekyll-seo-tag settings › https://github.com/jekyll/jekyll-seo-tag/blob/master/docs/usage.md
 # ↓ --------------------------
 
-title: wiliamvj # the main title
+title: Wiliam V. Joaquim # the main title
 
-tagline: Architecting the backend with a coffee-infused mindset. # it will display as the sub-title
+tagline: Back-end with coffee ☕ # it will display as the sub-title
 
 description: >- # used by seo meta and the atom feed
   Back-end developer | Golang | NodeJS | NestJS
