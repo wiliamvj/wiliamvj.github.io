@@ -8,8 +8,8 @@ pin: false
 math: false
 mermaid: true
 image:
-  path: /commons/fsdf98s0f980sd.png
-  lqip: /commons/fsdf98s0f980sd.png
+  path: /commons/thumbs/fsdf98s0f980sd.png
+  lqip: /commons/thumbs/fsdf98s0f980sd.png
   alt: Swagger dark mode com NestJS
 ---
 

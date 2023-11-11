@@ -8,8 +8,8 @@ pin: false
 math: false
 mermaid: true
 image:
-  path: /commons/8df7g897dfg98dfg7.png
-  lqip: /commons/8df7g897dfg98dfg7.png
+  path: /commons/thumbs/8df7g897dfg98dfg7.png
+  lqip: /commons/thumbs/8df7g897dfg98dfg7.png
   alt: Teste unitários com NestJS e Jest.
 ---
 
