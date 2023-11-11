@@ -13,13 +13,13 @@ image:
   alt: Swagger dark mode com Swaggo
 ---
 
-Recentemente criei um port monstrando como deixar o Swagger com tema dark mode utilizando [NestJS](/posts/dark-mode-swagger-nestjs/){:target="\_blank"}, agora vou mostrar como deixar o Swagger em dark mode utilizando o [Swaggo](https://github.com/swaggo/swag){:target="\_blank"}.
+Recentemente criei um port mostrando como deixar o Swagger com tema dark mode utilizando [NestJS](/posts/dark-mode-swagger-nestjs/){:target="\_blank"}, agora vou mostrar como deixar o Swagger em dark mode utilizando o [Swaggo](https://github.com/swaggo/swag){:target="\_blank"} com Go.
 
 ## O que é o Swaggo?
 
 O Swaggo é uma ferramenta que nos ajuda a documentar nossa API desenvolvida em [GO](https://go.dev/){:target="\_blank"}, gerando a documentação no padrão da [OpenAPI](https://www.openapis.org/){:target="\_blank"}.
 
-Não vamos focar em como utilizar o Swaggo, mas vou deixar aqui um post no [Dev.to](https://dev.to/booscaaa/documentanto-uma-api-go-com-swagger-2k05){:target="\_blank"} que ensina como fazer isso.
+Não vamos focar em como utilizar o Swaggo, mas vou deixar aqui um excelente post no [Dev.to](https://dev.to/booscaaa/documentanto-uma-api-go-com-swagger-2k05){:target="\_blank"} que ensina como fazer isso.
 
 ## Criando o projeto de exemplo
 
@@ -39,9 +39,9 @@ Isso vai criar nosso arquivo `go.mod`, que vai servir para gerenciar nossos paco
 
 Vamos organizar seguindo um padrão muito utilizado pela comunidade do Go, você pode ver nesse [repositório](https://github.com/golang-standards/project-layout){:target="\_blank"}
 
-- **cmd**: [Aqui](https://github.com/golang-standards/project-layout/tree/master/cmd){:target="\_blank"} é onde vamos deixar nosso arquivos que inicia nossa aplicação.
+- **cmd**: [Aqui](https://github.com/golang-standards/project-layout/tree/master/cmd){:target="\_blank"} é onde vamos deixar nosso arquivos que iniciam a nossa aplicação.
   - **webserver**: Aqui é onde vamos deixar o `main.go` que inicia nosso webserver.
-- **internal**: [Nessa pasta](https://github.com/golang-standards/project-layout/tree/master/internal){:target="\_blank"} onde vai ficar todo o código da nossa aplicação.
+- **internal**: [Nessa pasta](https://github.com/golang-standards/project-layout/tree/master/internal){:target="\_blank"} onde deve ficar todo o código da nossa aplicação.
   - **handler**: Aqui vai ficar os arquivos responsáveis por receber nossas solicitações http, você pode conhecer também como controllers.
     - **routes**: Aqui vamos organizar nossas rotas, incluido a rota da nossa documentação.
 
@@ -75,7 +75,7 @@ Você pode baixar os pacotes do go chi e swaggo com o comando:
   go get github.com/swaggo/http-swagger github.com/go-chi/chi/v5
 ```
 
-É necessário instalar o swag na sua máquina, veja como neste [link](https://github.com/swaggo/swag#getting-started)
+É necessário instalar o swag na sua máquina, veja como neste [link](https://github.com/swaggo/swag#getting-started){:target="\_blank"}
 
 `routes.go`:
 
@@ -117,7 +117,9 @@ o import `"_ swagger-dark-mode/docs"` vem da pasta gerada após iniciar o swag, 
 
 ![Project structure](/commons/posts/2023-11-11-dark-mode-swaggo/9sd8fF45GHjgfgQ.png){: .normal }
 
-o caminho `internal/handler/routes/routes.go` deve ser onde está o as anotações gerais do swag, no nosso caso setamos apenas o `@title` e o `@version`, veja todas as anotações possíveis [aqui](https://github.com/swaggo/swag#general-api-info){:target="\_blank"}.
+Dentro do `swagger.json` fica o arquivo no padrão da OpenAPI.
+
+o caminho `internal/handler/routes/routes.go` deve ser onde está as anotações gerais do swag, no nosso caso setamos apenas o `@title` e o `@version`, veja todas as anotações possíveis [aqui](https://github.com/swaggo/swag#general-api-info){:target="\_blank"}.
 
 `user.go`:
 
@@ -159,11 +161,17 @@ o caminho `internal/handler/routes/routes.go` deve ser onde está o as anotaçõ
       return
     }
 
-    w.Write([]byte(userMarshal))
+    w.Write(userMarshal)
   }
 ```
 
-No arquivo `user.go` é onde podemos validar nossa requisição, onde podemos pegar o body por exemplo e transformar em um [struct go](https://go.dev/ref/spec#Struct_types){:target="\_blank"}. Criamos um user fake, fizemos o enconding para Json usando [Marshal](https://pkg.go.dev/encoding/json#Marshal){:target="\_blank"} da struct `User`, caso não aconteça um erro duranto o Marshal, retornamos o json usando o `w.writer` transformando em um [slice de bytes](https://go.dev/blog/slices-intro){:target="\_blank"}.
+Se desejar formatar suas anotações do swag basta rodar o comando:
+
+```bash
+  swag fmt
+```
+
+No arquivo `user.go` é onde podemos validar nossa requisição, onde podemos pegar o body por exemplo e transformar em um [struct go](https://go.dev/ref/spec#Struct_types){:target="\_blank"}. Criamos um user fake, fizemos o enconding da a struct `User` para Json usando [Marshal](https://pkg.go.dev/encoding/json#Marshal){:target="\_blank"}, caso não aconteça um erro duranto o Marshal, retornamos o json usando o `w.writer`.
 
 ## Rodando o projeto
 
@@ -173,7 +181,7 @@ Tudo pronto para rodar o projeto, caso não tenha instalado os pacotes, rode o c
   go mod tidy
 ```
 
-Esse comando vai no arquivo `go.mod` e baixar as dependências.
+Esse comando vai no arquivo `go.mod` e faz o download das dependências.
 
 Vamos iniciar o projeto, rodando nosso `main.go`
 
@@ -181,7 +189,7 @@ Vamos iniciar o projeto, rodando nosso `main.go`
   go run cmd/webserver/main.go
 ```
 
-Se tudo estiver correto, vamos ter no terminal a mensagem `Server running on port 8080`.
+Se tudo estiver correto, vamos ter no terminal a mensagem _Server running on port 8080_.
 
 Acessando nossa rota via `http://localhost:8080/user` teremos esse resultado:
 
@@ -200,15 +208,16 @@ Acessando nossa outra rota `http://localhost:8080/docs/index.html`, teremos noss
 
 ## Criando nosso CSS e JS
 
-Bom, finalmente vamos ao intuito do post, deixar o tema do swagger em dark mode, infelizmente não existe nada nativo ou tão simples quanto deixar em dark mode utilizando o [NestJS](https://nestjs.com/){:target="\_blank"}. (Pelo menos até a data de pulbicação desse post).
+Bom, finalmente vamos ao intuito do post, deixar o tema do swagger em dark mode, infelizmente não existe nada nativo ou que seja simples quanto deixar o swagger em dark mode utilizando o [NestJS](https://nestjs.com/){:target="\_blank"}. _(Pelo menos até a data de pulbicação desse post)_.
 
-Vamos precisar injetar nosso css customizado no swaggo, para isso você pode utilizar o css desse [gist](https://gist.github.com/wiliamvj/674cbdf6de5377780013e6ff2e5667c3){:target="\_blank"}, mas também não conseguimos injetar o css diretamente, mas conseguimos injetar um JavaScript, com isso também consuimos manipular a [DOM](https://www.w3schools.com/js/js_htmldom.asp){:target="\_blank"}.
+Vamos precisar injetar nosso css customizado no swaggo, para isso você pode utilizar o css desse [gist](https://gist.github.com/wiliamvj/674cbdf6de5377780013e6ff2e5667c3){:target="\_blank"}, por´m também não conseguimos injetar o css diretamente, mas conseguimos injetar um JavaScript, com isso também se torna possível manipular a [DOM](https://www.w3schools.com/js/js_htmldom.asp){:target="\_blank"} e consequentemente injetar css.
 
 Vamos criar uma pasta dentro da pasta `docs`, chamado `custom`, onde vamos colocar nossas customizações.
 
-_Você pode criar fora da pasta `docs`, já que é uma pasta gerada dinamicamente pelo swaggo, pode ser substituida_
+_Você pode criar fora da pasta `docs`, já que é uma pasta gerada dinamicamente pelo swaggo, pode ser substituida e acabar perdendo sua customização_, mas para este exemplo vamos deixar dentro da pasta `docs` mesmo.
 
-Dentro do custom vamos criar 2 arquivos:
+Dentro do custom vamos criar 2 arquivos, `custom_css.go` e `custom_layout.go`.
+
 `custom_css.go`:
 
 ```go
@@ -216,6 +225,8 @@ Dentro do custom vamos criar 2 arquivos:
 
   var customCSS = `css do gist`
 ```
+
+No arquivo `custom_css.go`, apenas retornamos o css que deixe no [gist](https://gist.github.com/wiliamvj/674cbdf6de5377780013e6ff2e5667c3){:target="\_blank"} em string.
 
 `custom_layout.go`:
 
@@ -232,8 +243,7 @@ Dentro do custom vamos criar 2 arquivos:
     `, "`"+customCSS+"`")
 ```
 
-No arquivo `custom_css.go`, apenas retornamos o css em string.
-No arquivo `custom_layout.go` criamos noss JavaScript para ser injetado em nosso swagger,criamos uma tag style e adicionamos ao DOM, convertamosem string utilizando o `Sprintf` fo pacote [fmt](https://pkg.go.dev/fmthttps://pkg.go.dev/fmt){:target="\_blank"}, veja um post meu sobre o pacote fmt [aqui](/posts/fmt-go/){:target="\_blank"}.
+No arquivo `custom_layout.go` criamos noss JavaScript para ser injetado em nosso swagger, criamos uma tag style e adicionamos ao DOM, convertamos em string utilizando o `Sprintf` do pacote [fmt](https://pkg.go.dev/fmt){:target="\_blank"}, veja um post meu sobre o pacote fmt [aqui](/posts/fmt-go/){:target="\_blank"}.
 
 `""+customCSS+""`, isso envolve o arquivo JS em aspas duplas.
 
@@ -256,16 +266,18 @@ Vamos finalmente aplicar nosso dark mode, para isso vamos alterar no arquivo `ro
 ```
 
 `httpSwagger.AfterScript(custom.CustomJS)`: Isso injeta nosso JS no swagger depois da página ser carregada.
-`httpSwagger.DocExpansion("none")`: Isso faz com que cada o endpoint abre expandido ou não (gosto pessoal), mas ajuda quando sua documentação possui muitos endpoints.
-` "defaultModelsExpandDepth": "-1"`: Isso faz com que os models sejam ocultos, caso deseje deixar visível basta remover.
+`httpSwagger.DocExpansion("none")`: Isso faz com que cada o endpoint abre expandido ou não (gosto pessoal), mas ajuda quando sua documentação possui muitos endpoints, no exemplo o `-1` faz com que por padrão não fique expandido as rotas.
+`"defaultModelsExpandDepth": "-1"`: Isso faz com que os models sejam ocultos, caso precise deixar visível basta remover.
 
-Agora rodando novamente nosso projo, já teremos o swagger em dark mode:
+Existe mais opções possíveis nas [docs](https://swagger.io/docs/open-source-tools/swagger-ui/usage/configuration/){:target="\_blank"} do swagger.
+
+Agora rodando novamente nosso projeto, já teremos o swagger em dark mode:
 ![Swaggo dar mode](/commons/posts/2023-11-11-dark-mode-swaggo/0s9g7ansY45Joi.png){: .normal }
 ![Meme liked](https://media.giphy.com/media/m2Q7FEc0bEr4I/giphy.gif){: .normal }
 
 ## Personalizando ainda mais
 
-Agora com o poder da manipulação da DOM e com paciência, podemos modificar o layout da forma que desejarmos, vamos por exemplo altera r logo e favicon.
+Agora com o poder da manipulação da DOM e com paciência, podemos modificar o layout da forma que desejarmos, vamos por exemplo altera a logo e favicon e o title.
 
 Vamos modificar nosso `custom_layout.go`
 
@@ -293,7 +305,7 @@ Vamos modificar nosso `custom_layout.go`
     `, CustomLogo, CustomLogo, "`"+customCSS+"`")
 ```
 
-Adicionei um title, favicon e logo, usando um base64. Salvamos esse base64 em um arquivo chamado `images.go`.
+Adicionei um title, favicon e logo, usando um base64 para as imagens. Salvamos esse base64 em um arquivo chamado `images.go` dentro da pasta `custom`.
 
 ```go
   package custom
@@ -303,13 +315,13 @@ Adicionei um title, favicon e logo, usando um base64. Salvamos esse base64 em um
   )
 ```
 
-Apenas como exemplo, o favicon e logo foram utilizados o mesmo base64, mas você poderia separar, veja como ficou:
+Apenas como exemplo, o favicon e a logo foram utilizados a mesma imagem em base64, mas você poderia separar, veja como ficou:
 ![Swaggo dar mode](/commons/posts/2023-11-11-dark-mode-swaggo/fg89Peer124gfh567ghjJK78.png){: .normal }
 
-## Conclusão
+## Considerações finais
 
 Como podemos ver, não é tão complicado personalizar, apesar da personalização ser um pouco trabalhosa e parecer não ser a mais adequeada, ainda conseguimos deixar o tema do swagger com uma aparência mais agradável para quem for consumir nossa api.
 
 ## Link do repositório
 
-[repositório](https://github.com/wiliamvj/dark-mode-swaggo){:target="\_blank"} do projeto
+[repositório](https://github.com/wiliamvj/swagger-dark-mode){:target="\_blank"} do projeto
