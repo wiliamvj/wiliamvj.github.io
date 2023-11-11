@@ -23,7 +23,7 @@ Não vamos focar em como utilizar o Swaggo, mas vou deixar aqui um excelente pos
 
 ## Criando o projeto de exemplo
 
-Vamos criar um exemplo mais alinhado com uma utilização no mundo real, para isso vamos utilizar o [Go Chi](https://go-chi.io/){:target="\_blank"}, que é o roteador muito simples, mas que facilta muito na criação de rotas em Go.
+Vamos criar um exemplo mais alinhado com uma utilização no mundo real, para isso vamos utilizar o [Go Chi](https://go-chi.io/){:target="\_blank"}, que é o roteador muito simples, mas que facilita muito na criação de rotas em Go.
 
 Vamos iniciar o projeto rodando o comando:
 
@@ -272,7 +272,7 @@ Vamos finalmente aplicar nosso dark mode, para isso vamos alterar no arquivo `ro
 Existe mais opções possíveis nas [docs](https://swagger.io/docs/open-source-tools/swagger-ui/usage/configuration/){:target="\_blank"} do swagger.
 
 Agora rodando novamente nosso projeto, já teremos o swagger em dark mode:
-![Swaggo dar mode](/commons/posts/2023-11-11-dark-mode-swaggo/0s9g7ansY45Joi.png){: .normal }
+![Swaggo dark mode](/commons/posts/2023-11-11-dark-mode-swaggo/0s9g7ansY45Joi.png){: .normal }
 ![Meme liked](https://media.giphy.com/media/m2Q7FEc0bEr4I/giphy.gif){: .normal }
 
 ## Personalizando ainda mais
