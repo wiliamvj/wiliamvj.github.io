@@ -21,7 +21,7 @@ Vou explicar de forma bem resumida, o Swagger é uma aplicação open source que
 
 Por padrão o tema do SwaggerUi é branco:
 
-![Swagger claro](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/41rribcg6sg0yz0305qn.png)
+![Swagger claro](/commons/posts/2023-11-05-dark-mode-swagger-nestjs/41rribcg6sg0yz0305qn.png)
 <img width="90%" style="width:90%" src="https://media4.giphy.com/media/84BjZMVEX3aRG/giphy.gif?cid=7941fdc6zrsyrot6atdj7as4jvaiplgkjqkf9188qmmz57u0&ep=v1_gifs_search&rid=giphy.gif&ct=g">
 
 Mas, como podemos deixar esse tema dark? Bom, existem duas formas de fazer isso usando NestJS, ainda não temos suporte nativamente do Swagger para isso (existe um PR aberto, para implementar essa opção, veja [aqui](https://github.com/swagger-api/swagger-ui/issues/5327)), mas até a data da publicação este post ainda não foi implementado.
@@ -64,7 +64,7 @@ bootstrap();
 
 Rodando o projeto com `npm run start:dev` e acessando a api (http://localhost:3000/api), temos essa tela:
 
-![Swagger docs nestjs](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/ohgf8rucem5jv6873o31.png)
+![Swagger docs nestjs](/commons/posts/2023-11-05-dark-mode-swagger-nestjs/ohgf8rucem5jv6873o31.png)
 
 Agora, vamos deixar em modo dark, como dito anteriormente, não existe o suporte nativo do swagger para dark mode, mas vamos injetar nosso CSS, para isso vamos ajustar as configs do swagger no nosso `main.ts`
 
@@ -112,7 +112,7 @@ Separamos algumas configs em `myCustom`, o `SwaggerCustomOptions` nos permite in
 
 Conforme exemplo abaixo, isso facilita quando sua documentação possui muitas rotas.
 
-![swagger usando docExpansion](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/mjuoojao6v4ddhwmfwcj.png)
+![swagger usando docExpansion](/commons/posts/2023-11-05-dark-mode-swagger-nestjs/mjuoojao6v4ddhwmfwcj.png)
 
 `apisSorter`: Usando a opção `alpha`, vai ordenar as tags por ordem alfabética.
 
@@ -163,7 +163,7 @@ bootstrap();
 
 Apenas importamos o nosso css e colocamos em `customCss` e pronto, dark mode funcionando:
 
-![swagger dark mode](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/558tvggnb4qruyn17nxm.png)
+![swagger dark mode](/commons/posts/2023-11-05-dark-mode-swagger-nestjs/558tvggnb4qruyn17nxm.png)
 
 Com o css, podemos alterar qualquer coisa do layout padrão.
 
@@ -216,7 +216,7 @@ Fica bem mais simples, basta instanciar o `SwaggerTheme` com `const theme = new 
 
 Temos algumas opções de temas como, _dark_, _monokai_, _material_ entre outros, veja as opções na documentação do [swagger-themes](https://www.npmjs.com/package/swagger-themes), veja como ficaria o _monokai_:
 
-![swagger monokai tema](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/7hh6woxyw0mn20c8eokc.png)
+![swagger monokai tema](/commons/posts/2023-11-05-dark-mode-swagger-nestjs/7hh6woxyw0mn20c8eokc.png)
 
 Mas se podemos usar o [swagger-theme](https://www.npmjs.com/package/swagger-themes), por que deveríamos alterar o CSS manualmente?
 
