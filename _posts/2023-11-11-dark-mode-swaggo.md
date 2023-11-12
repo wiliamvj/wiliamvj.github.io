@@ -1,7 +1,7 @@
 ---
 title: Como deixar o Swagger com tema dark mode usando Swaggo e Golang
 author: wiliamvj
-date: 2023-11-11 10:10:00 +0800
+date: 2023-11-11 13:10:00 +0800
 categories: [Go]
 tags: [Go, Docs, Swagger]
 pin: false
