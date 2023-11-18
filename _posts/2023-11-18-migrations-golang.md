@@ -27,7 +27,7 @@ Agora, toda vez que precisar recriar a tabela `users`, você vai precisar lembra
 
 ## As migrations
 
-O funcionamento das migrations são relativamentes simples, geralmente temos um arquivo de `up` e outro de `down`, alguns ORMs como o [PrismaORM](https://www.prisma.io/docs/concepts/components/prisma-migrate){:target="\_blank"} criam apenas 1 arquivo, no arquivo de `up` criamos nosso SQL que vai criar ou alterar nosso banco, no arquivo de `down` criamos o SQL que desfaz a alteração.
+O funcionamento das migrations são relativamente simples, geralmente temos um arquivo de `up` e outro de `down`, alguns ORMs como o [PrismaORM](https://www.prisma.io/docs/concepts/components/prisma-migrate){:target="\_blank"} criam apenas 1 arquivo, no arquivo de `up` criamos nosso SQL que vai criar ou alterar nosso banco, no arquivo de `down` criamos o SQL que desfaz a alteração.
 
 ### Qual a vantagem?
 
@@ -35,7 +35,7 @@ Agora com esses arquivos, mantemos um histórico de alterações do banco de dad
 
 ## Migrations em Go
 
-O Go não oferece nativamente suporte ao uso de migrations, mas poderiámos utilizar o ORM que tenha essa funcionalidade, como o [GORM](https://gorm.io/docs/migration.html){:target="\_blank"} que é o mais utilizado pela comunidade, mas podemos utilizar as migrations sem o uso de um ORM, para isso vamos utilizar o pacote [golang-migrate](https://github.com/golang-migrate/migrate){:target="\_blank"}.
+O Go não oferece nativamente suporte ao uso de migrations, mas poderíamos utilizar o ORM que tenha essa funcionalidade, como o [GORM](https://gorm.io/docs/migration.html){:target="\_blank"} que é o mais utilizado pela comunidade, mas podemos utilizar as migrations sem o uso de um ORM, para isso vamos utilizar o pacote [golang-migrate](https://github.com/golang-migrate/migrate){:target="\_blank"}.
 
 ## Pacote Golang Migrate
 
@@ -106,9 +106,9 @@ Todo certo para continuar! O próximo passo é criar nossa primeira migrations c
 
 - `ext`: determina a extensão, vamos usar o sql.
 - `dir`: Aqui fica o diretório onde vai ser criado as nossas migrations.
-- `seq`: Determina a sequência do nome do arquivo da migrations, vamos usar númerico, pode ser usado timestamp.
+- `seq`: Determina a sequência do nome do arquivo da migrations, vamos usar numérico, pode ser usado timestamp.
 
-Com isso, você vai percerber que foi criado uma pasta chamada **migrations** dentro da pasta **database**.
+Com isso, você vai perceber que foi criado uma pasta chamada **migrations** dentro da pasta **database**.
 
 ![Project Migrations](/commons/posts/2023-11-18-migrations-golang/mrt8kjHd62iPdg.png){: .normal }
 
@@ -158,7 +158,7 @@ Com isso a tabela é removida.
 
 ### Adicionando mais campos
 
-Vamos ver agora como ficaria se fosse necessário adicionar mais um campo na tabela `users`, sem migrations, teriámos que alterar diretamente a tabela original, mas com migrations não precisamos, vamos criar outra migration:
+Vamos ver agora como ficaria se fosse necessário adicionar mais um campo na tabela `users`, sem migrations, teríamos que alterar diretamente a tabela original, mas com migrations não precisamos, vamos criar outra migration:
 
 ```bash
   migrate create -ext=sql -dir=internal/database/migrations -seq init
@@ -184,7 +184,7 @@ Ao rodar novamente:
   migrate -path=internal/database/migrations -database "postgresql://golang_migrate:golang_migrate@localhost:5432/golang_migrate?sslmode=disable" -verbose up
 ```
 
-Nosso campo `phone` é adicionado a tabela user, mas e se eu quiser fazer o `down` apenas na migration que adiciona o campo `phone`? É possivel, basta usar o mesmo comando, passando o valor 1, que significa que deseja desfazer a última migration:
+Nosso campo `phone` é adicionado a tabela user, mas e se eu quiser fazer o `down` apenas na migration que adiciona o campo `phone`? É possível, basta usar o mesmo comando, passando o valor 1, que significa que deseja desfazer a última migration:
 
 ```bash
   migrate -path=internal/database/migrations -database "postgresql://golang_migrate:golang_migrate@localhost:5432/golang_migrate?sslmode=disable" -verbose down 1
@@ -192,7 +192,7 @@ Nosso campo `phone` é adicionado a tabela user, mas e se eu quiser fazer o `dow
 
 O campo `phone` é removido.
 
-## Facilidando o uso da CLI
+## Facilitando o uso da CLI
 
 Como você pode perceber, os comandos do golang-migrate podem ser um pouco cansativos de usar, podemos facilitar usando um arquivo [makefile](https://dev.to/antoniomotta/makefile-22nh){:target="\_blank"}.
 
