@@ -228,7 +228,7 @@ E teremos nossos arquivos de migration criados, isso vale para os demais atalhos
 
 ## Considerações finais
 
-Nesse post vimos como utilizar as migrations e o quanto elas são importantes para manter um histórico de alterações e facilitar a manutenção do nosso banco de dados. Mas vale ressaltar que o uso de forma errada das migrations podem acabar fazendo você perder os dados do seu banco, por isso é importante ter esse conhecimento de como funcionam as migrations e como seu ORM ou sua liguangem lidam com elas.
+Nesse post vimos como utilizar as migrations e o quanto elas são importantes para manter um histórico de alterações e facilitar a manutenção do nosso banco de dados. Mas vale ressaltar que o uso de forma errada das migrations podem acabar fazendo você perder os dados do seu banco, por isso é importante ter esse conhecimento de como funcionam as migrations e como seu ORM ou sua linguagem lidam com as migrations.
 
 Evite apagar migrations, elas podem se tornar um pesadelo se não forem utilizadas de forma correta.
 
