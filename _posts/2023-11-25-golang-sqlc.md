@@ -43,7 +43,7 @@ Vamos ao código, para isso vamos criar um projeto simples:
 
 ![Project structure](/commons/posts/2023-11-25-golang-sqlc.go/fgh67hjksfdR65hUioPo.png){: .normal }
 
-Vamos apenas ter nosso `main.go`, que vai iniciar a conexão com o banco PostegreSQL e fazer nossa aplicação rodar:
+Vamos apenas ter nosso `main.go`, que vai iniciar a conexão com o banco PostgreSQL e fazer nossa aplicação rodar:
 
 ```go
   package main
