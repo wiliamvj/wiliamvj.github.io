@@ -543,3 +543,5 @@ O sqlc tem vários "truques" que podem facilitar a manipulação de dados como [
 ## Link do repositório
 
 [repositório](https://github.com/wiliamvj/golang-sqlc){:target="\_blank"} do projeto
+
+[Gopher credits](https://github.com/egonelbre/gophers){:target="\_blank"}

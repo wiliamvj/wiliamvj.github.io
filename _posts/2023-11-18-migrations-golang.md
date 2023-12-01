@@ -235,3 +235,5 @@ Evite apagar migrations, elas podem se tornar um pesadelo se não forem utilizad
 ## Link do repositório
 
 [repositório](https://github.com/wiliamvj/golang-migrations){:target="\_blank"} do projeto
+
+[Gopher credits](https://github.com/MariaLetta/free-gophers-pack){:target="\_blank"}
