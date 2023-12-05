@@ -8,13 +8,17 @@
   icon: "fa-brands fa-x-twitter"
   noblank: false # open link in current tab
 
+- type: linkedin
+  icon: "fab fa-linkedin" # icons powered by <https://fontawesome.com/>
+  url: "https://www.linkedin.com/in/wiliamvj/" # Fill with your Linkedin homepage
+
 - type: dev.to
   icon: "fa-brands fa-dev"
   noblank: false # open link in current tab
 
-- type: email
-  icon: "fas fa-envelope"
-  noblank: false # open link in current tab
+# - type: email
+#   icon: "fas fa-envelope"
+#   noblank: false # open link in current tab
 
 # - type: rss
 #   icon: "fas fa-rss"
@@ -25,9 +29,7 @@
 #   icon: 'fab fa-mastodon'   # icons powered by <https://fontawesome.com/>
 #   url:  ''                  # Fill with your Mastodon account page, rel="me" will be applied for verification
 #
-# - type: linkedin
-#   icon: 'fab fa-linkedin'   # icons powered by <https://fontawesome.com/>
-#   url:  ''                  # Fill with your Linkedin homepage
+
 #
 # - type: stack-overflow
 #   icon: 'fab fa-stack-overflow'

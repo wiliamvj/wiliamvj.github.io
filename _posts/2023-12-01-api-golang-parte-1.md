@@ -29,7 +29,7 @@ Para o nosso projeto, vamos usar o seguinte:
 
 - [PostgreSQL](https://www.postgresql.org/){:target="\_blank"} como banco de dados
 - [SQCL](https://sqlc.dev/) para lidar com nossas consultas ao banco de dados
-- [Golag Migrate](https://github.com/golang-migrate/migrate){:target="\_blank"} para lidar com nossas migrations
+- [Golang Migrate](https://github.com/golang-migrate/migrate){:target="\_blank"} para lidar com nossas migrations
 - [Go Chi](https://github.com/go-chi/chi){:target="\_blank"} para criar nossas rotas
 - [Go playground validator](https://github.com/go-playground/validator){:target="\_blank"} será responsável por validar nossos dados de entrada
 - [Swaggo](https://github.com/swaggo/http-swagger){:target="\_blank"} para criar nossa documentação no padrão OpenAPI
