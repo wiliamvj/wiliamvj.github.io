@@ -15,7 +15,7 @@ image:
 
 ## O que vamos fazer?
 
-Na parte 3 do nosso crud, vamos configurar nosso dto para realizar as validações dos dados de entrada da nossa api, e vamos criar o handler do usuário.
+Na parte 3 do nosso crud, vamos configurar nosso dto para realizar as validações dos dados de entrada da nossa api e vamos criar o handler do usuário.
 
 Se ainda não viu a [parte 1](https://wiliamvj.com/posts/api-golang-parte-1/){:target="\_blank"} e a [parte 2](https://wiliamvj.com/posts/api-golang-parte-2/){:target="\_blank"} leia esse post primeiro.
 
