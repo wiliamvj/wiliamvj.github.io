@@ -16,7 +16,7 @@ timezone: America/Sao_Paulo
 
 title: Wiliam V. Joaquim # the main title
 
-tagline: Back-end with coffee ☕ # it will display as the sub-title
+tagline: Back-end developer # it will display as the sub-title
 
 description: >- # used by seo meta and the atom feed
   Back-end developer | Golang | NodeJS | NestJS
