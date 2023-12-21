@@ -44,7 +44,7 @@ Por hora essa serão os dados da entidade user.
 
 ## Contrato entre service e repository
 
-Ainda não vamos trabalhar no service, mas precisamos definir o contrato para deixar nosso service caminhando sem o repository estar pronto, os contratos nos ajudam com isso, esse desacoplamento nos da mais liberdade de avançar sem precisar implementar outras partes da aplicação, poderíamos inclusive nem ter definido o que banco de dados vamos utilizar, mas poderíamos tranquilamente finalizar todo o resto da aplicação.
+Ainda não vamos trabalhar no service, mas precisamos definir o contrato para deixar nosso service caminhando sem o repository estar pronto, os contratos nos ajudam com isso, esse desacoplamento permite mais liberdade de avançar sem precisar implementar outras partes da aplicação, podemos inclusive adiar a escolha do banco de dados a ser utilizado, mas poderíamos tranquilamente finalizar todo o resto da aplicação.
 
 Vamos criar nossas interfaces no `user_interface_repository.go`:
 
@@ -138,7 +138,7 @@ Se a busca do usuário por e-mail retornar um erro, retornamos esse erro, se o `
   }
 ```
 
-Agora vamos precisar encriptar a senha do usuário, usando o pacote nativo do Go chamado [bcrypt](https://pkg.go.dev/golang.org/x/crypto@v0.13.0/bcrypt){:target="\_blank"}, transformamos a senha do usuário que está no `u.Password` em um slice de bytes e informamos que da encriptação da senha é 12, por padrão o `DefaultCost` é 10, quanto maior esse número mais forte é sua encriptação, o máximo aceito é 31, lembrando que encriptar tem um custo computacional, quanto maior esse número mais tempo vai levar.
+Agora vamos precisar encriptar a senha do usuário, usando o pacote nativo do Go chamado [bcrypt](https://pkg.go.dev/golang.org/x/crypto@v0.13.0/bcrypt){:target="\_blank"}, transformamos a senha do usuário que está no `u.Password` em um slice de bytes e informamos que a força da encriptação da senha é 12, por padrão o `DefaultCost` é 10, quanto maior esse número mais forte é sua encriptação, o máximo aceito é 31, lembrando que encriptar tem um custo computacional, quanto maior esse número mais tempo vai levar.
 
 Por curiosidade usando o valor 12 demora cerca de 100ms (Milissegundo) para encriptar, colocando 31 demora cerca de 7 minutos, claro que depende do hardware que está fazendo isso, mas a diferença de tempo é muito grande. Por padrão o uso comum usamos entre 10 e 14.
 
