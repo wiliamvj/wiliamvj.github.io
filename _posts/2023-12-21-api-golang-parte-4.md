@@ -1,7 +1,7 @@
 ---
 title: API completa em Golang - Parte 4
 author: wiliamvj
-date: 2023-12-21 09:07:00 +0800
+date: 2023-12-21 13:07:00 +0800
 categories: [Golang, API]
 tags: [Golang, SQL, SQLC, API, Migrations, Swagger, Docs]
 pin: false
