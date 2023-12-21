@@ -1,27 +1,29 @@
 <!-- The Side Bar -->
 
 <aside aria-label="Sidebar" id="sidebar" class="d-flex flex-column align-items-end">
-  <header class="profile-wrapper">
-    <a href="{{ '/' | relative_url }}" id="avatar" class="rounded-circle">
-      {% if site.avatar != empty and site.avatar %}
-        {% capture avatar_url %}
-            {% if site.avatar contains '://' %}
-              {{ site.avatar }}
-            {% elsif site.img_cdn != empty and site.img_cdn %}
-              {{ site.avatar | prepend: site.img_cdn }}
-            {% else %}
-              {{ site.avatar | relative_url }}
-            {% endif %}
-          {% endcapture %}
-        <img src="{{ avatar_url | strip }}" width="112" height="112" alt="avatar" onerror="this.style.display='none'">
-      {% endif %}
-    </a>
+  <header class="profile-wrapper d-flex align-items-center">
+  <a href="{{ '/' | relative_url }}" id="avatar" class="rounded-circle me-3">
+    {% if site.avatar != empty and site.avatar %}
+      {% capture avatar_url %}
+        {% if site.avatar contains '://' %}
+          {{ site.avatar }}
+        {% elsif site.img_cdn != empty and site.img_cdn %}
+          {{ site.avatar | prepend: site.img_cdn }}
+        {% else %}
+          {{ site.avatar | relative_url }}
+        {% endif %}
+      {% endcapture %}
+      <img src="{{ avatar_url | strip }}" width="112" height="112" alt="avatar" onerror="this.style.display='none'">
+    {% endif %}
+  </a>
 
-    <h1 class="site-title">
+  <div>
+    <h1 class="site-title mb-0">
       <a href="{{ '/' | relative_url }}">{{ site.title }}</a>
     </h1>
-    <p class="site-subtitle fst-italic mb-0">{{ site.tagline }}</p>
-  </header>
+  </div>
+</header>
+
   <!-- .profile-wrapper -->
 
   <nav class="flex-column flex-grow-1 w-100 ps-0">
@@ -45,6 +47,13 @@
         </li>
         <!-- .nav-item -->
       {% endfor %}
+      <!-- .nav-item custom -->
+        <li class="nav-item{% if tab.url == page.url %}{{ " active" }}{% endif %}">
+          <a href="https://wiliamvj.substack.com/" target="_blank" class="nav-link">
+            <i class="fa-fw fas fa-newspaper"></i>
+            <span>NEWSLETTER</span>
+          </a>
+        </li>
     </ul>
   </nav>
 
