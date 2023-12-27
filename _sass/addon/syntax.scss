@@ -275,7 +275,7 @@ div {
         margin-left: $dot-margin;
         width: $code-dot-size;
         height: $code-dot-size;
-        border-radius: $base-radius;
+        border-radius: 100%;
         background-color: var(--code-header-muted-color);
         box-shadow: ($code-dot-size + $code-dot-gap) 0 0
             var(--code-header-muted-color),
