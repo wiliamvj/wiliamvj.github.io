@@ -286,60 +286,60 @@ Acima chamamos o `ValidateHttpData` que vai colocar o go playground em ação e 
 
 Já podemos ver isso na prática, se estiver acompanhando seu projeto deve rodar sem problemas, rode com o comando `go run cmd/webserver/main.go`, vamos fazer uma chamada POST para `http://localhost:8080/user`, vou deixar no projeto o arquivo da extensão para vscode do [rest client](https://marketplace.visualstudio.com/items?itemName=humao.rest-client){:target="\_blank"}
 
-```json
-  POST http://localhost:8080/user HTTP/1.1
-  content-type: application/json
+```http
+POST http://localhost:8080/user HTTP/1.1
+content-type: application/json
 
-  {
-    "name": "John Doe",
-    "email": "john.doe@email.com",
-    "password": "12345678"
-  }
+{
+  "name": "John Doe",
+  "email": "john.doe@email.com",
+  "password": "12345678"
+}
 ```
 
 Vamos ter o retorno:
 
-```json
-  HTTP/1.1 400 Bad Request
-  Date: Thu, 14 Dec 2023 23:33:21 GMT
-  Content-Length: 205
-  Content-Type: text/plain; charset=utf-8
-  Connection: close
+```http
+HTTP/1.1 400 Bad Request
+Date: Thu, 14 Dec 2023 23:33:21 GMT
+Content-Length: 205
+Content-Type: text/plain; charset=utf-8
+Connection: close
 
-  {
-    "message": "some fields are invalid",
-    "error": "bad_request",
-    "code": 400,
-    "fields": [
-      {
-        "field": "password",
-        "value": "12345678",
-        "message": "password must contain at least one of the following characters: !@#$%*"
-      }
-    ]
-  }
+{
+  "message": "some fields are invalid",
+  "error": "bad_request",
+  "code": 400,
+  "fields": [
+    {
+      "field": "password",
+      "value": "12345678",
+      "message": "password must contain at least one of the following characters: !@#$%*"
+    }
+  ]
+}
 ```
 
 Perceba que nossas validações funcionaram, e fomos informados que nosso password está inválido, precisamos colocar qualquer caracter que solicitamos como obrigatório
 
-```json
-  POST http://localhost:8080/user HTTP/1.1
-  content-type: application/json
+```http
+POST http://localhost:8080/user HTTP/1.1
+content-type: application/json
 
-  {
-    "name": "John Doe",
-    "email": "john.doe@email.com",
-    "password": "12345678@"
-  }
+{
+  "name": "John Doe",
+  "email": "john.doe@email.com",
+  "password": "12345678@"
+}
 ```
 
 Resposta:
 
-```json
-  HTTP/1.1 200 OK
-  Date: Thu, 14 Dec 2023 23:35:52 GMT
-  Content-Length: 0
-  Connection: close
+```http
+HTTP/1.1 200 OK
+Date: Thu, 14 Dec 2023 23:35:52 GMT
+Content-Length: 0
+Connection: close
 ```
 
 Agora sim, tudo funcionando com validações e padronização, basta chamar o service, mas precisamos ajustar nosso service do usuário, para receber os parâmetros necessários.
@@ -501,24 +501,23 @@ Agora vamos finalizar o handler de `UpdateUser`:
 
 Vamos testar:
 
-```json
-  ## Update user
-  PATCH http://localhost:8080/user/9d47a06e-9677-460c-84e3-1bb7ac20b931 HTTP/1.1
-  content-type: application/json
+```http
+PATCH http://localhost:8080/user/9d47a06e-9677-460c-84e3-1bb7ac20b931 HTTP/1.1
+content-type: application/json
 
-  {
-    "name": "John Doe",
-    "email": "john.doe@email.com"
-  }
+{
+  "name": "John Doe",
+  "email": "john.doe@email.com"
+}
 ```
 
 Retorno:
 
-```json
-  HTTP/1.1 200 OK
-  Date: Sat, 16 Dec 2023 19:06:12 GMT
-  Content-Length: 0
-  Connection: close
+```http
+HTTP/1.1 200 OK
+Date: Sat, 16 Dec 2023 19:06:12 GMT
+Content-Length: 0
+Connection: close
 ```
 
 ### Detalhes do usuário
@@ -600,28 +599,27 @@ Vamos testar, mas como nosso service não está finalizado, vamos retornar dados
 
 Fazendo uma chamada:
 
-```json
-  ## GetUserByID
-  GET http://localhost:8080/user/9d47a06e-9677-460c-84e3-1bb7ac20b931 HTTP/1.1
-  content-type: application/json
+```http
+GET http://localhost:8080/user/9d47a06e-9677-460c-84e3-1bb7ac20b931 HTTP/1.1
+content-type: application/json
 ```
 
 Retorno:
 
-```json
-  HTTP/1.1 200 OK
-  Content-Type: application/json
-  Date: Sat, 16 Dec 2023 19:42:11 GMT
-  Content-Length: 156
-  Connection: close
+```http
+HTTP/1.1 200 OK
+Content-Type: application/json
+Date: Sat, 16 Dec 2023 19:42:11 GMT
+Content-Length: 156
+Connection: close
 
-  {
-    "id": "123",
-    "name": "John Doe",
-    "email": "jonh.doe@email.com",
-    "created_at": "2023-12-16T16:42:11.816803-03:00",
-    "updated_at": "2023-12-16T16:42:11.816803-03:00"
-  }
+{
+  "id": "123",
+  "name": "John Doe",
+  "email": "jonh.doe@email.com",
+  "created_at": "2023-12-16T16:42:11.816803-03:00",
+  "updated_at": "2023-12-16T16:42:11.816803-03:00"
+}
 ```
 
 ### Deletando o usuário
@@ -684,10 +682,9 @@ O endpoint de deletar vai ser muito semelhante ao endpoint de listar usuário, a
 
 Chamada http:
 
-```json
-  ## DeleteUser
-  DELETE http://localhost:8080/user/9d47a06e-9677-460c-84e3-1bb7ac20b931 HTTP/1.1
-  content-type: application/json
+```http
+DELETE http://localhost:8080/user/9d47a06e-9677-460c-84e3-1bb7ac20b931 HTTP/1.1
+content-type: application/json
 ```
 
 ### Listar todos os usuários
