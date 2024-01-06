@@ -8,14 +8,14 @@ pin: false
 math: false
 mermaid: true
 image:
-  path: /commons/thumbs/htyf78HJsvdfczaqfg6jiopl.png
-  lqip: /commons/thumbs/htyf78HJsvdfczaqfg6jiopl.png
+  path: /commons/thumbs/dfd$gfhhjp0Hdgf.png
+  lqip: /commons/thumbs/dfd$gfhhjp0Hdgf.png
   alt: CRUD Golang.
 ---
 
 ## O que vamos fazer?
 
-Na parte 5 do nosso crud, vamos fazer a autenticação do usuário, criando um endpoint de login que retorna um JWT, vamos proteger as rotas, impedindo o uso sem token, vamos criar uma função que recebe o token e devolve ums estrutura com os dados salvos no token e ainda vamos adicionar um middleware de logs que adiciona dados do usuário que fez a chamada a nossa api.
+Na parte 5 do nosso crud, vamos fazer a autenticação do usuário, criando um endpoint de login que retorna um JWT, vamos proteger as rotas, impedindo o uso sem token, vamos criar uma função que recebe o token e devolve uma estrutura com os dados salvos no token e ainda vamos adicionar um middleware de logs que adiciona dados do usuário que fez a chamada a nossa api.
 
 Se ainda não viu os posts anteriores leia eles primeiro.
 
@@ -28,7 +28,7 @@ Se ainda não viu os posts anteriores leia eles primeiro.
 
 Não vou me aprofundar em como o JWT funciona, para não ficar um post muito extenso, mas você pode ler esse [post](https://dev.to/gabrielhsilvestre/o-basico-jwt-json-web-token-2akc){:target="\_blank"} e entender melhor.
 
-Para conseguirmos gerar nosso JWT precisamos ajustar algumas coisas, primeiro vamos adicionar nas váriaveis de ambiente o segredo do nosso jwt e o tempo de expiração:
+Para conseguirmos gerar nosso JWT precisamos ajustar algumas coisas, primeiro vamos adicionar nas variáveis de ambiente o segredo do nosso jwt e o tempo de expiração:
 
 `.env`:
 
@@ -63,7 +63,7 @@ Depois disto precisamos inicializar o `TokenAuth`, vamos fazer isso também no a
   return Env, nil
 ```
 
-Definimos que o nosso algoritimo de assinatura será o "HS256" para gerar tokens JWT. O mais utilizado é o `HS256`, porém existem outros como:
+Definimos que o nosso algoritmo de assinatura será o "HS256" para gerar tokens JWT. O mais utilizado é o `HS256`, porém existem outros como:
 
 ```go
 	ES256       SignatureAlgorithm = "ES256" // ECDSA using P-256 and SHA-256
@@ -107,7 +107,7 @@ Também precisamos criar uma response, para retornar o token gerado, para isso d
 
 Para o nosso service, vamos separar essa parte de autenticação em outro arquivo, para isso crie dentro da pasta **service/userservice** um arquivo chamado `auth_service.go`.
 
-Primeiro vamos criar nossa inteface, vamos chamar de `Login`:
+Primeiro vamos criar nossa interface, vamos chamar de `Login`:
 
 ```go
   type UserService interface {
@@ -141,7 +141,7 @@ Agora vamos implementar, dentro do arquivo recém criado `auth_service.go`:
   }
 ```
 
-Primeiro fazemos as validações básicas, verificando se o usuário com o e-mail informado realmente existe, nossa próxima validação requer criar um novo metodo no noss `repository`, vai ser responsável por buscar apenas a senha do usuário, essa é uma boa prática, devemos evitar retornar a senha do usuário de forma desnecessária, por isso optei em criar um metodo único para isso.
+Primeiro fazemos as validações básicas, verificando se o usuário com o e-mail informado realmente existe, nossa próxima validação requer criar um novo método no nosso `repository`, vai ser responsável por buscar apenas a senha do usuário, essa é uma boa prática, devemos evitar retornar a senha do usuário de forma desnecessária, por isso optei em criar um método único para isso.
 
 Vamos criar primeiro a interface:
 
@@ -172,7 +172,7 @@ Agora vamos implementar:
 
 Como nosso `repository` ainda não está pronto, vamos retornar dados fakes, sem isso não vamos conseguir validar e finalizar o service, por isso criar um hash da senha `12345678@`.
 
-Vamos retornar um dado face no nosso metodo `FindUserByEmail` também:
+Vamos retornar um dado face no nosso método `FindUserByEmail` também:
 
 ```go
   func (r *repository) FindUserByEmail(ctx context.Context, email string) (*entity.UserEntity, error) {
@@ -187,7 +187,7 @@ Vamos retornar um dado face no nosso metodo `FindUserByEmail` também:
 
 Esses dados fakes são apenas para conseguir validar da forma correta o nosso service, na parte 6 vamos alterar.
 
-Agora voltando ao service, podemos validar a senha, como o vamos comparar a senha? Uma vez criado o hash da senha se torna impossivel reverter (até seria possivel, mas não devemos ter poder computacional para tal feito atualmente), para poder comparar a senha vamos pegar a senha que o usuário informar no login, fazer novamente o hash e comparar com o hash que temos salvo no banco de dados, simples assim, o pacote do bcrypt do Go já permite comparar hashs de forma nativa, vamos ver:
+Agora voltando ao service, podemos validar a senha, como o vamos comparar a senha? Uma vez criado o hash da senha se torna impossível reverter (até seria possível, mas não devemos ter poder computacional para tal feito atualmente), para poder comparar a senha vamos pegar a senha que o usuário informar no login, fazer novamente o hash e comparar com o hash que temos salvo no banco de dados, simples assim, o pacote do bcrypt do Go já permite comparar hashes de forma nativa, vamos ver:
 
 ```go
   userPass, err := s.repo.GetUserPassword(ctx, user.ID)
@@ -214,7 +214,7 @@ Primeiro buscamos a senha do usuário, depois com o `CompareHashAndPassword` faz
   })
 ```
 
-Vamos chamar nosso `TokenAuth` como a funcão `Encode`, e vamos passar os dados que desejamos salver no token, na opção `exp` é onde definimos a expiração do token, com o valor informaos na nossa váriavel de ambiente.
+Vamos chamar nosso `TokenAuth` como a função `Encode`, e vamos passar os dados que desejamos salver no token, na opção `exp` é onde definimos a expiração do token, com o valor informamos na nossa variável de ambiente.
 
 Com isso temos o nosso token jwt pronto, basta retornar:
 
@@ -410,7 +410,7 @@ O `jwt.RegisteredClaims` é uma estrutura incorporada no pacote [github.com/gola
 
 Ao adicionar o `jwt.RegisteredClaims` na estrutura `CurrentUser`, estamos aproveitando esses dados. Isso permite que o pacote jwt interprete automaticamente e manipule essas reivindicações durante a validação e a análise do token jwt.
 
-Vamos ler o token e trnaformar na `struct`:
+Vamos ler o token e transformar na `struct`:
 
 ```go
   func DecodeJwt(r *http.Request) (*CurrentUser, error) {
@@ -466,9 +466,9 @@ Com isso temos nossa função pronta, mas onde usar? Vamos aplicar um exemplo, n
   }
 ```
 
-Agora podemos chamar a funcão `DecodeJwt` e pegar o id do usuário, sem a necessidade do cliente informar o id. Podemos faxer isso para todos os enpoints que sejam autenticados e precise passar o id do usuário, no nosso caso são eles: `GetUserByID`, `DeleteUser`, `UpdateUserPassword` e `UpdateUser`.
+Agora podemos chamar a função `DecodeJwt` e pegar o id do usuário, sem a necessidade do cliente informar o id. Podemos fazer isso para todos os enpoints que sejam autenticados e precise passar o id do usuário, no nosso caso são eles: `GetUserByID`, `DeleteUser`, `UpdateUserPassword` e `UpdateUser`.
 
-Precismos atualizar a documentação, removendo o `{id}` da url:
+Precisamos atualizar a documentação, removendo o `{id}` da url:
 
 ```go
   // User details
@@ -573,7 +573,7 @@ Agora nas rotas `user_route.go`, vamos usar o log de forma global:
 
 Adicionamos o `router.Use(middleware.LoggerData)`.
 
-Precismos remover da url o id `{id}` e na rota de listar todos os usuários adicione o `/list-all` para não gerar conflitos entre a rota de listar detalhes de um único usuário.
+Precisamos remover da url o id `{id}` e na rota de listar todos os usuários adicione o `/list-all` para não gerar conflitos entre a rota de listar detalhes de um único usuário.
 
 Veja como ficou, vamos fazer o login na nossa aplicacão:
 
@@ -603,7 +603,7 @@ Nosso log:
 }
 ```
 
-Repare que temos a senha exposta, precisamos remover dados sensíveis do log, para isso vamos criar uma função que returna um booleano caso encontre a palavra que desejamos ocultar:
+Repare que temos a senha exposta, precisamos remover dados sensíveis do log, para isso vamos criar uma função que retorna um booleano caso encontre a palavra que desejamos ocultar:
 
 `logger_middleware.go`:
 
@@ -722,4 +722,20 @@ log:
 }
 ```
 
-Esse middleware serve apenas para abordar sobre o uso de middlewares, seria necessário melhorar essas validações se forem utilizados logs dessa maneira. Para exibir dados de uma forma mais concisa, o log deveria estar dentro do handler, assim conseguimos controlar melhor os dados do body, uma vez que transformamos em struct e sabemos seu tipo, um midleware global fica um pouco complicado saber o valor do body, por isso criamos a função `hasSensitiveData` para auxiliar nessa tarefa.
+Esse middleware serve apenas para abordar sobre o uso de middlewares, seria necessário melhorar essas validações se forem utilizados logs dessa maneira. Para exibir dados de uma forma mais concisa, o log deveria estar dentro do handler, assim conseguimos controlar melhor os dados do body, uma vez que transformamos em struct e sabemos seu tipo, um middleware global fica um pouco complicado saber o valor do body, por isso criamos a função `hasSensitiveData` para auxiliar nessa tarefa.
+
+## Considerações finais
+
+Nesse post conseguimos finalizar a autenticação da nossa api, essa foi uma abordagem simples, existem outras estratégias mais avançadas que poderíamos utilizar como a utilização de refresh tokens, mas isso fica para um próximos posta
+
+Se inscreva e receba um aviso quando sair novos posts, [se inscrever](https://wiliamvj.substack.com/){:target="\_blank"}
+
+## Próximos passos
+
+Na parte 6 vamos iniciar nosso repository e persisitir os dados no nosso banco de dados.
+
+## Link do repositório
+
+[repositório](https://github.com/wiliamvj/api-users-golang){:target="\_blank"} do projeto
+
+[Gopher credits](https://github.com/egonelbre/gophers){:target="\_blank"}
