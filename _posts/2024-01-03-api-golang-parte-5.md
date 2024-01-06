@@ -732,7 +732,7 @@ Se inscreva e receba um aviso quando sair novos posts, [se inscrever](https://wi
 
 ## Próximos passos
 
-Na parte 6 vamos iniciar nosso repository e persisitir os dados no nosso banco de dados.
+Na parte 6 vamos iniciar nosso repository e persistir os dados no nosso banco de dados.
 
 ## Link do repositório
 
