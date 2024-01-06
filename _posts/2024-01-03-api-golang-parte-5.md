@@ -386,7 +386,7 @@ Connection: close
 }
 ```
 
-Retorna um `user: []` pos ainda não implementamos o repository.
+Retorna um `user: []` pois ainda não implementamos o repository.
 
 ## Capturando o token
 
