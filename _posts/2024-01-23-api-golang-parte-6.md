@@ -24,3 +24,7 @@ Se ainda não viu os posts anteriores leia eles primeiro.
 [parte 3](https://wiliamvj.com/posts/api-golang-parte-3/){:target="\_blank"} |
 [parte 4](https://wiliamvj.com/posts/api-golang-parte-4/){:target="\_blank"} |
 [parte 5](https://wiliamvj.com/posts/api-golang-parte-5/){:target="\_blank"} |
+
+## Criandos nossas queries
+
+Primeiro vamos criar nossas querias para salvar um usuário, buscar um usuário pelo id, buscar todos os usuários, deletar usuário, atualizar um usuário e atualizar a senha do usuário.
