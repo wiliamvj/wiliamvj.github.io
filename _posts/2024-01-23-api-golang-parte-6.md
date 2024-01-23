@@ -1,21 +1,21 @@
 ---
 title: API completa em Golang - Parte 6
 author: wiliamvj
-date: 2024-01-06T13:57:31.491Z
+date: 2024-01-23T18:57:31.491Z
 categories: [Golang, API]
 tags: [Golang, SQL, SQLC, API, Migrations, Swagger, Docs]
 pin: false
 math: false
 mermaid: true
 image:
-  path: /commons/thumbs/uidGhfFHhkn90ndftqcvkFfgFasSd.png
-  lqip: /commons/thumbs/uidGhfFHhkn90ndftqcvkFfgFasSd.png
+  path: /commons/thumbs/thumb_re435g5G5gGfgfOp.png
+  lqip: /commons/thumbs/thumb_re435g5G5gGfgfOp.png
   alt: CRUD Golang.
 ---
 
 ## O que vamos fazer?
 
-Na parte 6 do nosso crud vamos finalizar nosso repository, salvando os dados do usuários no banco de dados utilizando o [sqlc](https://sqlc.dev/).
+Na parte 6 do nosso crud vamos finalizar nosso repository, salvando os dados do usuários no banco de dados utilizando o [sqlc](https://sqlc.dev/){:target="\_blank"}.
 
 Se ainda não viu os posts anteriores leia eles primeiro.
 
@@ -25,11 +25,11 @@ Se ainda não viu os posts anteriores leia eles primeiro.
 [parte 4](https://wiliamvj.com/posts/api-golang-parte-4/){:target="\_blank"} |
 [parte 5](https://wiliamvj.com/posts/api-golang-parte-5/){:target="\_blank"} |
 
-## Criandos a tabela de endereços
+## Criando a tabela de endereços
 
-Primeiramente vamos criar uma tabela de endereços, nela vamos salvar os endereços dos nossos usuários, poderíamos coloar esses dados na mesma tabela do usuário, porém decidi separar para utilizarmos mais relacionamentos e transactions com o postgres.
+Primeiramente vamos criar uma tabela de endereços, nela vamos salvar os endereços dos nossos usuários, poderíamos salvar esses dados na mesma tabela do usuário, porém decidi separar para utilizarmos relacionamentos e transactions com o postgres.
 
-Vamos criar uma nova migration com o comando `make create_migration`. Criamos esse comando no [parte 2](https://wiliamvj.com/posts/api-golang-parte-2/){:target="\_blank"}. Com a nova migration criada, vamos na migration up criar a tabela:
+Vamos criar uma nova migration com o comando `make create_migration`. Criamos esse comando na [parte 2](https://wiliamvj.com/posts/api-golang-parte-2/){:target="\_blank"}, com a nova migration criada, vamos escrever o sql na migration up:
 
 ```sql
   CREATE TABLE address (
@@ -48,15 +48,17 @@ Vamos criar uma nova migration com o comando `make create_migration`. Criamos es
   );
 ```
 
-Criamos os campos que pegamos na api do viacep, e adicionamos um relacionamento com o usuário (one to one), onde um usuário tem um endereço e um endereço pertence a um usuário.
+Criamos os campos que pegamos na api do viacep e adicionamos um relacionamento com o usuário (one to one), onde um usuário tem um endereço e um endereço pertence a um usuário.
 
-Na migration down podemos criar isso:
+Na migration down podemos fazer o sql que desfaz o que fizemos acima:
 
 ```sql
   DROP TABLE IF EXISTS address;
 ```
 
-Agora podemos rodar o comando `make migrate_up`, não se esqueça de garantir que o banco de dados esteja rodando. Com isso temos nossa tabela relacionanda com o usuário.
+Agora podemos rodar o comando `make migrate_up`, não se esqueça de garantir que o banco de dados esteja rodando, se você clonou o repositório, basta usar o comando `docker compose up -d` que já vai subir um container com o postgres.
+
+Com isso temos nossa tabela relacionanda com o usuário.
 
 ## Criando as queries
 
@@ -97,7 +99,7 @@ Essa query vai ser responsável por buscar um usuário pelo ID e também vamos r
 
 ### UpdateUser
 
-Essa query vai ser responsável por atualizar o usuário, usei os [nullable parameters](https://docs.sqlc.dev/en/stable/howto/named_parameters.html#nullable-parameters) do sqlc, facilita a lidar com dados nulos, como atualizar dados é opcional, caso o usuário deseja atualizar apenas o `name`, o resto dos dados não é anulado. Sem isso precisaríamos fazer algumas validações a mais:
+Essa query vai ser responsável por atualizar o usuário, usei os [nullable parameters](https://docs.sqlc.dev/en/stable/howto/named_parameters.html#nullable-parameters){:target="\_blank"} do sqlc, isso ajuda a lidar com dados nulos, como atualizar dados é opcional, caso o usuário deseja atualizar apenas o `name` por exemplo, o resto dos dados não é anulado. Sem isso precisaríamos fazer algumas validações a mais:
 
 ```sql
   -- name: UpdateUser :exec
@@ -110,7 +112,7 @@ Essa query vai ser responsável por atualizar o usuário, usei os [nullable para
 
 ### DeleteUser
 
-Essa query vai ser responsável por deletar um usuário pelo id, consequente deleta o endereço, pois criamos o relacionamento com a opção `DELETE CASCADE`:
+Essa query vai ser responsável por deletar um usuário pelo id, consequentemente deleta o endereço, pois criamos o relacionamento com a opção `DELETE CASCADE`:
 
 ```sql
   -- name: DeleteUser :exec
@@ -159,7 +161,7 @@ Essa query vai ser responsável por criar o endereço do usuário na tabelas `ad
 
 ### CreateUserAddress
 
-Por fim, essa query vai atualizar o endereço do usuário, usando o nullable parameters](https://docs.sqlc.dev/en/stable/howto/named_parameters.html#nullable-parameters) do sqlc:
+Por fim, essa query vai atualizar o endereço do usuário, usando o [nullable parameters](https://docs.sqlc.dev/en/stable/howto/named_parameters.html#nullable-parameters){:target="\_blank"} do sqlc:
 
 ```sql
   -- name: UpdateUserAddress :exec
@@ -176,13 +178,13 @@ Por fim, essa query vai atualizar o endereço do usuário, usando o nullable par
 
 ### Gerando o código sqlc
 
-Com as queries escritas vamos rodar o sqlc para fazer sua mágica e gerar o código, vamos rodar:
+Com as queries escritas vamos rodar o sqlc para fazer sua mágica e gerar o código, vamos rodar com o comando:
 
 ```bash
   sqlc generate
 ```
 
-Se notar na pasta **internal/database/sqlc** vai notar que foi gerado bastante código, lembrando que não é preciso alterar nada da pasta sqlc.
+Se notar na pasta **internal/database/sqlc** vai perceber que foi gerado bastante código, lembrando que não é preciso alterar nada da pasta sqlc.
 
 ## Finalizando o repository
 
@@ -222,9 +224,9 @@ Agora vamos ajustar nosso repository, até o momento apenas implementamos, agora
   }
 ```
 
-No código acima, chamamos q nossa `queries` que inciamos lá no `main.go` (`queries := sqlc.New(dbConnection)`), chamaos o `CreateUser` que definimos na annotation (`-- name: CreateUser :exec`), por fim o sqlc criar uma struct `CreateUserParams` dentro da pasta sqlc, nela vamos passar nossos dados. Depois de criar o usuário e se não houver erro, criamos o endereço com `CreateUserAddress`, nosso repository será bastante simples já que a única responsabilidade dele deve chamar o sqlc fazer o que precisa no banco e retornar um dado ou um erro, nada mais que isso.
+No código acima, chamamos q nossa `queries` que iniciamos lá no `main.go` (`queries := sqlc.New(dbConnection)`), chamamos o `CreateUser` que definimos na annotation (`-- name: CreateUser :exec`), por fim o sqlc criou uma struct `CreateUserParams` dentro da pasta sqlc, nela vamos passar nossos dados. Depois de criar o usuário e se não houver erro, criamos o endereço com `CreateUserAddress`, nosso repository será bastante simples já que a única responsabilidade dele é chamar o sqlc fazer as tarefas no banco e retornar dados ou um erro, nada mais que isso.
 
-Reparou em um problema? no caso do metódo `CreateUser` realiza duas escritas no nosso banco, imagine que ao salvar o endereço ocorra um erro? Nosso usuário vai ficar sem endereço e isso começa a degradar nosso banco de dados, isso é um problema grave, por isso a forma correta de tratar isso seria salvar esses dados de forma atômica, vamos fazer isso com transactions, mas antes vamos finalizar o repository.
+Reparou em um problema? no caso do método `CreateUser` realiza duas tarefas no nosso banco, imagine que se ao salvar o endereço ocorra um erro? Nosso usuário vai ficar sem endereço e isso começa a degradar nosso banco de dados, isso é um problema grave! A forma correta de tratar esse problema seria salvar esses dados de forma atômica, vamos fazer isso com transactions, mas antes vamos finalizar o repository.
 
 ### FindUserByEmail
 
@@ -243,7 +245,7 @@ Reparou em um problema? no caso do metódo `CreateUser` realiza duas escritas no
   }
 ```
 
-Buscar nosso usúario pelo e-mail é bem simples, passamos o contexto e o email e depois tratamos para retornar o `UserEntity`, nesse caso o `FindUserByEmail` poderia apenas retornar um `boolean`, uma vez que vamos utilizar apenas para saber se um usuário existe ou não, mas vamos manter assim,
+Buscar nosso usuário pelo e-mail é bem simples, passamos o contexto e o e-mail e depois tratamos para retornar o `UserEntity`, nesse caso o `FindUserByEmail` poderia retornar apenas um `boolean`, já utilizar apenas para saber se um usuário existe ou não, mas vamos manter assim por enquanto.
 
 ### FindUserByID
 
@@ -314,9 +316,9 @@ Para atualizar um usuário também é muito simples, a única diferença que tem
   }
 ```
 
-Por isso usamos o `sql.NullString` caso o dado seja do tipo não `null` no contexto que estamos então devemos atualizar, caso contrário não alteramos nada no banco.
+Por isso usamos o `sql.NullString` caso o dado seja do tipo não `null` no contexto que estamos, então devemos atualizar, caso contrário não alteramos nada no banco.
 
-Novamente o metódo `UpdateUser` atualizar o usuário e endereço, temos o mesmo problema do `CreateUser` e vamos resolver com transactions.
+Novamente o método `UpdateUser` atualiza o usuário e endereço, temos o mesmo problema do `CreateUser` e vamos resolver com transactions.
 
 ### DeleteUser
 
@@ -394,15 +396,15 @@ Para atualizar a senha do usuário, apenas passamos a nova senha, id e um nova d
   }
 ```
 
-Por fim, esse metódo usamos apenas para buscar a senha do usuário, alterei para retornar apenas uma `string` nos últimos posts ele retornava um ponteiro do `entity.UserEntity`, não se esqueça de alterar na interface `user_interface_repository`.
+Por fim, esse método usamos apenas para buscar a senha do usuário, alterei para retornar apenas uma `string` nos últimos posts ele retornava um ponteiro do `entity.UserEntity`, não se esqueça de alterar na interface `user_interface_repository`.
 
-Nosso repository está quase pronto, como pode perceber é bastante simples e com pouca responsabilidades no nosso projeto, antes de partir para as transactions vamos fazer alguns ajustes.
+Nosso repository está quase pronto, como pode perceber é bastante simples e com pouca responsabilidade no nosso projeto, antes de partir para as transactions vamos fazer alguns ajustes na nossa api.
 
 ## Ajustando o service
 
 Vamos precisar ajustar algumas coisas no service, alguns tratamentos que acabei esquecendo de passar.
 
-No metódo `CreateUser` do service, precisamos tratar ao verificar se o usuário existe pelo e-mail se o que o repository retorna não é um erro do tipo `sql.ErrNoRows`, caso não encontre nada no banco é isso que o repostiry retorna, sem isso nossa lógica fica errada:
+No método `CreateUser` do service, precisamos tratar ao verificar se o usuário existe pelo e-mail se o repository retornar um erro e esse erro for diferente de um erro do tipo `sql.ErrNoRows`, então temos um erro que devemos retornar, isso garante que seja retornado apenas um erro que não esperamos, quando o postgres do pacote pg não encontra um registro no banco é retornado um `sql.ErrNoRows` que nada mais é que um `errors.New("sql: no rows in result set")`.
 
 ```go
   userExists, err := s.repo.FindUserByEmail(ctx, u.Email)
@@ -414,7 +416,7 @@ No metódo `CreateUser` do service, precisamos tratar ao verificar se o usuário
   }
 ```
 
-Precisamos ajustar também no método `UpdateUser`, caso o erro seja do tipo `sql.ErrNoRows` significa que não encontrou um usuário.
+Precisamos ajustar também no método `UpdateUser`, caso o erro seja do tipo `sql.ErrNoRows` significa que não encontrou o usuário.
 
 ```go
   _, err := s.repo.FindUserByID(ctx, id)
@@ -428,7 +430,7 @@ Precisamos ajustar também no método `UpdateUser`, caso o erro seja do tipo `sq
   }
 ```
 
-Caso o usuário informe um e-mail, precisamos validar isso também:
+Caso o usuário informe um e-mail para atualização, precisamos validar também:
 
 ```go
   if u.Email != "" {
@@ -472,7 +474,7 @@ Precisamos adicionar o address ao response, vamos alterar o `user_response.go`:
 
 ## Alterando o auth
 
-Vamos moficiar o `auth_service.go` não vamos mais retornar a senha no metódo `FindUserByEmail`, para isso vamos buscar a senha do usuários com o metódo `GetUserPassword`:
+Vamos moficiar o `auth_service.go` não vamos mais retornar a senha no método `FindUserByEmail`, para isso vamos buscar a senha do usuários com o método `GetUserPassword`:
 
 ```go
   pass, err := s.repo.GetUserPassword(ctx, user.ID)
@@ -488,7 +490,7 @@ Agora para comparar as senhas usamos o `pass`:
   err = bcrypt.CompareHashAndPassword([]byte(pass), []byte(u.Password))
 ```
 
-o mesmo no metódo `UpdateUserPassword` do `user_service.go`:
+o mesmo no método `UpdateUserPassword` do `user_service.go`:
 
 ```go
   oldPass, err := s.repo.GetUserPassword(ctx, id)
@@ -517,7 +519,7 @@ Agora usamos o `oldPass` para comparar:
 
 ## Melhorando o arquivo http
 
-Nosso arquivo `http_client.http` precisamos setar o token de autenticação de forma manual após fazer login, vamos usar um trick do http client para deixar dinâmico:
+Nosso arquivo `http_client.http` precisamos setar o token de autenticação de forma manual após fazer login, vamos usar um "trick" do [rest client](https://github.com/Huachao/vscode-restclient){:target="\_blank"} para deixar dinâmico:
 
 ```http
 # @name login
@@ -539,8 +541,233 @@ content-type: application/json
 Authorization: Bearer { {token} }
 ```
 
-Agora não precisamos mais ficar copiando o token q colocando en cada enpoint 😎.
+Agora não precisamos mais ficar copiando o token e colocando em cada endpoint 😎.
 
-Se quiser saber mais sobre esse truques veeja aqui nas [docs](https://github.com/Huachao/vscode-restclient){:target="\_blank"}.
+Se quiser saber mais sobre esse truques veja aqui nas [docs](https://github.com/Huachao/vscode-restclient){:target="\_blank"}.
 
 ## Trabalhando com transactions
+
+Temos um problema para salvar e editar um usuário, como são dois comandos excutados um após o outro (salvar usuário e salvar endereço) e não queremos um usuário sem endereço e um endereço sem usuário, caso ocorra um erro ao salvar qualquer um dos dados, o outro já aconteceu, por exemplo:
+
+```go
+func (r *repository) CreateUser(ctx context.Context, u *entity.UserEntity) error {
+    err := r.queries.CreateUser(ctx, sqlc.CreateUserParams{
+      ID:        u.ID,
+      Name:      u.Name,
+      Email:     u.Email,
+      Password:  u.Password,
+      CreatedAt: u.CreatedAt,
+      UpdatedAt: u.UpdatedAt,
+    })
+    if err != nil {
+      return err
+    }
+    err = r.queries.CreateUserAddress(ctx, sqlc.CreateUserAddressParams{
+      ID:         uuid.New().String(),
+      UserID:     u.ID,
+      Cep:        u.Address.CEP,
+      Ibge:       u.Address.IBGE,
+      Uf:         u.Address.UF,
+      City:       u.Address.City,
+      Complement: sql.NullString{String: u.Address.Complement, Valid: u.Address.Complement != ""},
+      Street:     u.Address.Street,
+      CreatedAt:  time.Now(),
+      UpdatedAt:  time.Now(),
+    })
+    if err != nil {
+      return err
+    }
+    return nil
+  }
+```
+
+Perceba que criamos primeiro o usuário, esse comando já foi efetuado no banco, caso ocorra um erro ao salvar o endereço o usuário criado no primeiro comando o usuário vai ficar sem endereço, isso gera um problema sério para a nossa aplicação, precisamos garantir que seja salvo todos os dados ou nada seja salvo em caso de erro, por isso precisamos fazer isso de forma atômica.
+
+Como assim? Utilizando transactions o comando de salvar o usuário e o endereço entram em uma única transação, que por sua vez só pode ter dois resultados possiveis ou salvamos todos os dados corretamente ou nada é salvo. Digamos que aconteça um erro ao salvar o endereço, mas o usuário já foi salvo, utilizando transaction o usuário seria removido do banco (roll back), pois o comando de salvar endereço falhou, se tudo ocorrer com sucesso tudo é salvo (commit). Uma transação pode ter várias operações, no nosso exemplo vamos utilizar apenas duas que são salvar o usuário e seu endereço ou é tudo salvo com sucesso ou nada é salvo.
+
+Transactions são um assunto um pouco mais complexo, não vou me aprofundar, quero apenas mostrar a forma correta de executar vários comandos no banco de dados sem perder dados e degradar o banco.
+
+Vou mostrar um exemplo do problema:
+
+```go
+func (r *repository) CreateUser(ctx context.Context, u *entity.UserEntity) error {
+    err := r.queries.CreateUser(ctx, sqlc.CreateUserParams{
+      ID:        u.ID,
+      Name:      u.Name,
+      Email:     u.Email,
+      Password:  u.Password,
+      CreatedAt: u.CreatedAt,
+      UpdatedAt: u.UpdatedAt,
+    })
+    if err != nil {
+      return err
+    }
+    return errors.New("error")
+    err = r.queries.CreateUserAddress(ctx, sqlc.CreateUserAddressParams{
+      ID:         uuid.New().String(),
+      UserID:     u.ID,
+      Cep:        u.Address.CEP,
+      Ibge:       u.Address.IBGE,
+      Uf:         u.Address.UF,
+      City:       u.Address.City,
+      Complement: sql.NullString{String: u.Address.Complement, Valid: u.Address.Complement != ""},
+      Street:     u.Address.Street,
+      CreatedAt:  time.Now(),
+      UpdatedAt:  time.Now(),
+    })
+    if err != nil {
+      return err
+    }
+    return nil
+  }
+```
+
+Adicionei um return `return errors.New("error")` logo após salvar o usuário, vamos testar e chamar o endepoint de criação de usuário:
+
+![Dbeaver](/commons/posts/2024-01-23-api-golang-parte-6/usghfgh65gfGFjhgj.png){: .normal }
+
+O usuário foi criado com sucesso.
+
+![Dbeaver](/commons/posts/2024-01-23-api-golang-parte-6/sdfsdfs5fghGH34456.png){: .normal }
+
+Porém o endereço não foi salvo, devido ao return que adicionamos para simular um erro.
+
+### Utilizando transactions
+
+O sqlc já oferece suporte a transactions, veja nas [docs](https://docs.sqlc.dev/en/latest/howto/transactions.html){:target="\_blank"}.
+
+Vamos criar uma pasta chamada **transaction** dentro da pasta **repository** e um arquivo chamado `run_transaction.go`:
+
+```go
+  func Run(ctx context.Context, c *sql.DB, fn func(*sqlc.Queries) error) error {
+    tx, err := c.BeginTx(ctx, nil)
+    if err != nil {
+      return err
+    }
+    q := sqlc.New(tx)
+    err = fn(q)
+    if err != nil {
+      if errRb := tx.Rollback(); errRb != nil {
+        return fmt.Errorf("error on rollback: %v, original error: %w", errRb, err)
+      }
+      return err
+    }
+    return tx.Commit()
+  }
+```
+
+Esse código vamos utilizar para injetar durante a execução do sqlc, ele vai ser responsável por dar `rollBack` e caso de erro e fazer o `commit` em caso de sucesso.
+
+Perceba que é bem semelhante ao que fazemos no main iniciando o sqlc com `sqlc.New(tx)`, o `BeginTx` pode ser um pouco mais complexo de entender, ele vai recebe um contextom o `nil` se trata do isolate level, podemos definir níveis de isolamento para a nossa transação, mas como disse é um assunto mais complexo, vamos deixar o isolamento padrão. Veja masi sobre isolate level nesse [post](https://medium.com/nerd-for-tech/understanding-database-isolation-levels-c4ebcd55c6b9){:target="\_blank"}.
+
+Bom, com a nossa função pronta, podemos alterar o método `CreateUser` do nosso repository, ficando assim:
+
+```go
+  func (r *repository) CreateUser(ctx context.Context, u *entity.UserEntity) error {
+    err := transaction.Run(ctx, r.db, func(q *sqlc.Queries) error {
+      var err error
+      err = q.CreateUser(ctx, sqlc.CreateUserParams{
+        ID:        u.ID,
+        Name:      u.Name,
+        Email:     u.Email,
+        Password:  u.Password,
+        CreatedAt: u.CreatedAt,
+        UpdatedAt: u.UpdatedAt,
+      })
+      if err != nil {
+        return err
+      }
+      err = q.CreateUserAddress(ctx, sqlc.CreateUserAddressParams{
+        ID:         uuid.New().String(),
+        UserID:     u.ID,
+        Cep:        u.Address.CEP,
+        Ibge:       u.Address.IBGE,
+        Uf:         u.Address.UF,
+        City:       u.Address.City,
+        Complement: sql.NullString{String: u.Address.Complement, Valid: u.Address.Complement != ""},
+        Street:     u.Address.Street,
+        CreatedAt:  time.Now(),
+        UpdatedAt:  time.Now(),
+      })
+      if err != nil {
+        return err
+      }
+      return nil
+    })
+    if err != nil {
+      slog.Error("error to create user and address, roll back applied", "err", err)
+      return err
+    }
+    return nil
+  }
+```
+
+Agora usamos a função `Run` que criamos, passamos o contexto, conexão com o banco e o ponteiro das nossas queries do sqlc, a partir de agora tudo que acontecer dentro dessa função é uma transaction única. Também precisamos usar as queries do sqlc está no paramentro `q` da função anônima, antes usávamos do `r.queries`, se houver qualquer erro agora nossa transaction vai fazer um rollback, se tudo ocorrer com sucesso vamos ter um commit da transação.
+
+Você pode fazer novamente o teste e colocar o `return errors.New("error")` antes de salvar o endereço do usuário, depois olhe no banco, vai perceber que o usuário não foi salvo, inclusive nossa api já vai retornar um erro 400 para o cliente.
+
+### Implementando no UpdateUser
+
+Vamos alterar também nosso método `UpdateUser`:
+
+```go
+  func (r *repository) UpdateUser(ctx context.Context, u *entity.UserEntity) error {
+    err := transaction.Run(ctx, r.db, func(q *sqlc.Queries) error {
+      var err error
+      err = r.queries.UpdateUser(ctx, sqlc.UpdateUserParams{
+        ID:        u.ID,
+        Name:      sql.NullString{String: u.Name, Valid: u.Name != ""},
+        Email:     sql.NullString{String: u.Email, Valid: u.Email != ""},
+        UpdatedAt: u.UpdatedAt,
+      })
+      if err != nil {
+        return err
+      }
+      err = r.queries.UpdateUserAddress(ctx, sqlc.UpdateUserAddressParams{
+        UserID:     u.ID,
+        Cep:        sql.NullString{String: u.Address.CEP, Valid: u.Address.CEP != ""},
+        Ibge:       sql.NullString{String: u.Address.IBGE, Valid: u.Address.IBGE != ""},
+        Uf:         sql.NullString{String: u.Address.UF, Valid: u.Address.UF != ""},
+        City:       sql.NullString{String: u.Address.City, Valid: u.Address.City != ""},
+        Complement: sql.NullString{String: u.Address.Complement, Valid: u.Address.Complement != ""},
+        Street:     sql.NullString{String: u.Address.Street, Valid: u.Address.Street != ""},
+        UpdatedAt:  time.Now(),
+      })
+      if err != nil {
+        return err
+      }
+      return nil
+    })
+    if err != nil {
+      slog.Error("error to update user and address, roll back applied", "err", err)
+      return err
+    }
+    return nil
+  }
+```
+
+Agora com a função `Run` feita, podemos usar facilmente onde precisar efetuar mais de um comando no banco de dados.
+
+## Atualizando as docs
+
+Para finalizar vamos gerar novamente as nossas docs, já que modificamos o response, basta rodar o comando:
+
+```bash
+  swag init -g internal/handler/routes/docs_route.go
+```
+
+## Considerações finais
+
+Nesse post conseguimos finalizar a nosso repository, persistindo os dados no banco, também utilizamos transactions, deixando nossa api mais robusta.
+
+## Próximos passos
+
+Estamos chegando na reta final da nossa série, espero que esteja curtindo. Na parte 7 vamos implementar a parte de produtos, desde o handler até o repository.
+
+## Link do repositório
+
+[repositório](https://github.com/wiliamvj/api-users-golang){:target="\_blank"} do projeto
+
+Se inscreva e receba um aviso sobre novos posts, [participar](https://wiliamvj.substack.com/){:target="\_blank"}
+
+[Gopher credits](https://github.com/egonelbre/gophers){:target="\_blank"}
