@@ -382,7 +382,7 @@ Para buscar todos os usuário também não tem segredo, a única coisa diferente
   }
 ```
 
-Para atualizar a senha do usuário, apenas passamos a nova senha, id e um nova data para informar sua atualiazação.
+Para atualizar a senha do usuário, apenas passamos a nova senha, id e um nova data para informar sua atualização.
 
 ### GetUserPassword
 
@@ -474,7 +474,7 @@ Precisamos adicionar o address ao response, vamos alterar o `user_response.go`:
 
 ## Alterando o auth
 
-Vamos moficiar o `auth_service.go` não vamos mais retornar a senha no método `FindUserByEmail`, para isso vamos buscar a senha do usuários com o método `GetUserPassword`:
+Vamos modificar o `auth_service.go` não vamos mais retornar a senha no método `FindUserByEmail`, para isso vamos buscar a senha do usuários com o método `GetUserPassword`:
 
 ```go
   pass, err := s.repo.GetUserPassword(ctx, user.ID)
@@ -519,7 +519,7 @@ Agora usamos o `oldPass` para comparar:
 
 ## Melhorando o arquivo http
 
-Nosso arquivo `http_client.http` precisamos setar o token de autenticação de forma manual após fazer login, vamos usar um "trick" do [rest client](https://github.com/Huachao/vscode-restclient){:target="\_blank"} para deixar dinâmico:
+Nosso arquivo `http_client.http` precisamos definir o token de autenticação de forma manual após fazer login, vamos usar um "trick" do [rest client](https://github.com/Huachao/vscode-restclient){:target="\_blank"} para deixar dinâmico:
 
 ```http
 # @name login
@@ -533,7 +533,7 @@ content-type: application/json
 @token = { {login.response.body.access_token} }
 ```
 
-Definimos um nome para esse endpoint com o `@name login`, depois pegamos o token da resposta e colocamos no `@token`, agora podemos usar o `token` nos demais enpoints, dessa forma:
+Definimos um nome para esse endpoint com o `@name login`, depois pegamos o token da resposta e colocamos no `@token`, agora podemos usar o `token` nos demais endpoints, dessa forma:
 
 ```http
 GET http://localhost:8080/user/list-all HTTP/1.1
@@ -547,7 +547,7 @@ Se quiser saber mais sobre esse truques veja aqui nas [docs](https://github.com/
 
 ## Trabalhando com transactions
 
-Temos um problema para salvar e editar um usuário, como são dois comandos excutados um após o outro (salvar usuário e salvar endereço) e não queremos um usuário sem endereço e um endereço sem usuário, caso ocorra um erro ao salvar qualquer um dos dados, o outro já aconteceu, por exemplo:
+Temos um problema para salvar e editar um usuário, como são dois comandos executados um após o outro (salvar usuário e salvar endereço) e não queremos um usuário sem endereço e um endereço sem usuário, caso ocorra um erro ao salvar qualquer um dos dados, o outro já aconteceu, por exemplo:
 
 ```go
 func (r *repository) CreateUser(ctx context.Context, u *entity.UserEntity) error {
@@ -583,7 +583,7 @@ func (r *repository) CreateUser(ctx context.Context, u *entity.UserEntity) error
 
 Perceba que criamos primeiro o usuário, esse comando já foi efetuado no banco, caso ocorra um erro ao salvar o endereço o usuário criado no primeiro comando o usuário vai ficar sem endereço, isso gera um problema sério para a nossa aplicação, precisamos garantir que seja salvo todos os dados ou nada seja salvo em caso de erro, por isso precisamos fazer isso de forma atômica.
 
-Como assim? Utilizando transactions o comando de salvar o usuário e o endereço entram em uma única transação, que por sua vez só pode ter dois resultados possiveis ou salvamos todos os dados corretamente ou nada é salvo. Digamos que aconteça um erro ao salvar o endereço, mas o usuário já foi salvo, utilizando transaction o usuário seria removido do banco (roll back), pois o comando de salvar endereço falhou, se tudo ocorrer com sucesso tudo é salvo (commit). Uma transação pode ter várias operações, no nosso exemplo vamos utilizar apenas duas que são salvar o usuário e seu endereço ou é tudo salvo com sucesso ou nada é salvo.
+Como assim? Utilizando transactions o comando de salvar o usuário e o endereço entram em uma única transação, que por sua vez só pode ter dois resultados possíveis ou salvamos todos os dados corretamente ou nada é salvo. Digamos que aconteça um erro ao salvar o endereço, mas o usuário já foi salvo, utilizando transaction o usuário seria removido do banco (roll back), pois o comando de salvar endereço falhou, se tudo ocorrer com sucesso tudo é salvo (commit). Uma transação pode ter várias operações, no nosso exemplo vamos utilizar apenas duas que são salvar o usuário e seu endereço ou é tudo salvo com sucesso ou nada é salvo.
 
 Transactions são um assunto um pouco mais complexo, não vou me aprofundar, quero apenas mostrar a forma correta de executar vários comandos no banco de dados sem perder dados e degradar o banco.
 
@@ -622,7 +622,7 @@ func (r *repository) CreateUser(ctx context.Context, u *entity.UserEntity) error
   }
 ```
 
-Adicionei um return `return errors.New("error")` logo após salvar o usuário, vamos testar e chamar o endepoint de criação de usuário:
+Adicionei um return `return errors.New("error")` logo após salvar o usuário, vamos testar e chamar o endpoint de criação de usuário:
 
 ![Dbeaver](/commons/posts/2024-01-23-api-golang-parte-6/usghfgh65gfGFjhgj.png){: .normal }
 
@@ -658,7 +658,7 @@ Vamos criar uma pasta chamada **transaction** dentro da pasta **repository** e u
 
 Esse código vamos utilizar para injetar durante a execução do sqlc, ele vai ser responsável por dar `rollBack` e caso de erro e fazer o `commit` em caso de sucesso.
 
-Perceba que é bem semelhante ao que fazemos no main iniciando o sqlc com `sqlc.New(tx)`, o `BeginTx` pode ser um pouco mais complexo de entender, ele vai recebe um contextom o `nil` se trata do isolate level, podemos definir níveis de isolamento para a nossa transação, mas como disse é um assunto mais complexo, vamos deixar o isolamento padrão. Veja masi sobre isolate level nesse [post](https://medium.com/nerd-for-tech/understanding-database-isolation-levels-c4ebcd55c6b9){:target="\_blank"}.
+Perceba que é bem semelhante ao que fazemos no main iniciando o sqlc com `sqlc.New(tx)`, o `BeginTx` pode ser um pouco mais complexo de entender, ele vai recebe um o `nil` se trata do isolate level, podemos definir níveis de isolamento para a nossa transação, mas como disse é um assunto mais complexo, vamos deixar o isolamento padrão. Veja mais sobre isolate level nesse [post](https://medium.com/nerd-for-tech/understanding-database-isolation-levels-c4ebcd55c6b9){:target="\_blank"}.
 
 Bom, com a nossa função pronta, podemos alterar o método `CreateUser` do nosso repository, ficando assim:
 
@@ -702,7 +702,7 @@ Bom, com a nossa função pronta, podemos alterar o método `CreateUser` do noss
   }
 ```
 
-Agora usamos a função `Run` que criamos, passamos o contexto, conexão com o banco e o ponteiro das nossas queries do sqlc, a partir de agora tudo que acontecer dentro dessa função é uma transaction única. Também precisamos usar as queries do sqlc está no paramentro `q` da função anônima, antes usávamos do `r.queries`, se houver qualquer erro agora nossa transaction vai fazer um rollback, se tudo ocorrer com sucesso vamos ter um commit da transação.
+Agora usamos a função `Run` que criamos, passamos o contexto, conexão com o banco e o ponteiro das nossas queries do sqlc, a partir de agora tudo que acontecer dentro dessa função é uma transaction única. Também precisamos usar as queries do sqlc está no parâmetro `q` da função anônima, antes usávamos do `r.queries`, se houver qualquer erro agora nossa transaction vai fazer um rollback, se tudo ocorrer com sucesso vamos ter um commit da transação.
 
 Você pode fazer novamente o teste e colocar o `return errors.New("error")` antes de salvar o endereço do usuário, depois olhe no banco, vai perceber que o usuário não foi salvo, inclusive nossa api já vai retornar um erro 400 para o cliente.
 
