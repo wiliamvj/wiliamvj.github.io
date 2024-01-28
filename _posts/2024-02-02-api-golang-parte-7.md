@@ -25,3 +25,7 @@ Se ainda não viu os posts anteriores leia eles primeiro.
 [parte 4](https://wiliamvj.com/posts/api-golang-parte-4/){:target="\_blank"} |
 [parte 5](https://wiliamvj.com/posts/api-golang-parte-5/){:target="\_blank"} |
 [parte 6](https://wiliamvj.com/posts/api-golang-parte-6/){:target="\_blank"}
+
+## Criando as entidades
+
+Primeiramente vamos criar nossas entidades de **product** e **category**.
