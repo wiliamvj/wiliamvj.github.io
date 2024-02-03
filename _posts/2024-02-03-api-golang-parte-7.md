@@ -8,8 +8,8 @@ pin: false
 math: false
 mermaid: true
 image:
-  path: /commons/thumbs/thumb_8erterfdfg34fghfgh.png
-  lqip: /commons/thumbs/thumb_8erterfdfg34fghfgh.png
+  path: /commons/thumbs/thumb_8erterfdfg34fghfgh.jpg
+  lqip: /commons/thumbs/thumb_8erterfdfg34fghfgh.jpg
   alt: CRUD Golang.
 ---
 
