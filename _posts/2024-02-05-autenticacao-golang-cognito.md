@@ -453,7 +453,7 @@ Chamamos a função que acabamos de criar `CreateUser`, se houver um erro lança
 
 Vamos fazer um `go mod tidy` baixando todos os pacotes, depois vamos rodar a aplicação com `go run main.go`
 
-Agora podemos criar uma chamada no arquivo `request.http e executar:
+Agora podemos criar uma chamada no arquivo `request.http` e executar:
 
 ```http
 POST http://localhost:8080/user HTTP/1.1
