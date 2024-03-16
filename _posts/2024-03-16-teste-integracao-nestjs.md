@@ -1,5 +1,5 @@
 ---
-title: Utilizando Testcontainers para Testes de Integração com nestJS e Prisma ORM
+title: Utilizando Testcontainers para Testes de Integração com NestJS e Prisma ORM
 author: wiliamvj
 date: 2024-03-16T09:50:31.491Z
 categories: [NestJS, NodeJS, Testecontainers]
@@ -10,7 +10,7 @@ mermaid: true
 image:
   path: /commons/thumbs/thumb_fd435fgh5y.png
   lqip: /commons/thumbs/thumb_fd435fgh5y.png
-  alt: Utilizando Testcontainers para Testes de Integração com nestJS e Prisma ORM.
+  alt: Utilizando Testcontainers para Testes de Integração com NestJS e Prisma ORM
 ---
 
 ## Introdução
