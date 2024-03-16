@@ -35,7 +35,7 @@ O Testcontainers facilita a execução dos componentes necessários para a aplic
 
 ## Como vamos utilizar?
 
-Vamos utilizar o jest para realizar os testes e o [supertest](https://www.npmjs.com/package/supertest){:target="\_blank"} para fazer nossas chamadas http, a ideiar seria:
+Vamos utilizar o jest para realizar os testes e o [supertest](https://www.npmjs.com/package/supertest){:target="\_blank"} para fazer nossas chamadas http, a ideia seria:
 
 **No inicio de todos os teste:**
 
